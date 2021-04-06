@@ -11,6 +11,8 @@ import {
   FormControl, 
   FormLabel, 
   FormHelperText,
+  InputLeftAddon,
+  InputGroup
 } from '@chakra-ui/react'
 
 import firebase from './../config/firebase'
@@ -18,6 +20,7 @@ import firebase from './../config/firebase'
 const validationSchema = yup.object().shape({
   email: yup.string().email('Email inválido').required('Preenchimento obrigatório'),
   password: yup.string().required('Preenchimento obrigatório'),
+  username: yup.string().required('Preenchimento obrigatório')
 })
 
 export default function Home() {
@@ -32,7 +35,7 @@ export default function Home() {
   } = useFormik({
     onSubmit: async (values, form) => {
       try {
-        const user = await firebase.auth().signInWithEmailAndPassword(values.email, values.password)
+        const user = await firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
         console.log(user);
       } catch (e) {
         console.error(e)
@@ -57,7 +60,7 @@ export default function Home() {
           </Text>
         </Box>
 
-        <Box width='100%' maxWidth='500px'>
+        <Box>
           <FormControl id='email' p={4} isRequired>
             <FormLabel>Email</FormLabel>
             <Input
@@ -85,13 +88,27 @@ export default function Home() {
             {touched.password && <FormHelperText textColor='#e74c3c'>{errors.password}</FormHelperText>}
           </FormControl>
 
+          <FormControl id='username' isRequired>
+            <InputGroup size='lg' p={4} pb={0}>
+              <InputLeftAddon children='clocker.work/'/>
+              <Input
+                type='username' 
+                value={values.username} 
+                borderColor='#b1b1b1'
+                onChange={handleChange} 
+                onBlur={handleBlur}
+              />
+            </InputGroup>
+              {touched.username && <FormHelperText pl={4} textColor='#e74c3c'>{errors.username}</FormHelperText>}
+          </FormControl>
+
           <Box p={4}>
             <Button colorScheme='blue' width='100%' isLoading={isSubmitting} onClick={handleSubmit}>Entrar</Button>
           </Box>
         </Box>
-        <Link href='/signup'>
-          <p style={{color: '#a0a0a0', cursor: 'pointer'}}>Ainda não tem uma conta? Cadrastre-se</p>
-        </Link>
+          <Link href='/'>
+            <p style={{color: '#a0a0a0', cursor: 'pointer'}}>Já tem uma conta? Acesse</p>
+          </Link>          
       </Container>
     </div>
   )
