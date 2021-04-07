@@ -90,7 +90,7 @@ export default function Home() {
 
           <FormControl id='username' isRequired>
             <InputGroup size='lg' p={4} pb={0}>
-              <InputLeftAddon children='clocker.work/'/>
+              <InputLeftAddon children='marcoskloss-clocker.vercel.app/'/>
               <Input
                 type='username' 
                 value={values.username} 
