@@ -3,7 +3,7 @@ import { Box, Spinner } from '@chakra-ui/react'
 
 import { Agenda } from "../components/Agenda";
 import { Login } from "../components/Login";
-import { firebaseClient } from '../config/firebase'
+import firebaseClient from '../config/firebase/client'
 
 export default function Home() {
   const [ auth, setAuth ] = useState({
