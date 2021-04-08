@@ -1,26 +1,21 @@
-import { useEffect, useState } from "react";
 import { Box, Spinner } from '@chakra-ui/react'
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
-import { Agenda } from "../components/Agenda";
-import { Login } from "../components/Login";
-import firebaseClient from '../config/firebase/client'
+import { useAuth } from '../components/Auth';
 
 export default function Home() {
-  const [ auth, setAuth ] = useState({
-    loading: true,
-    user: null
-  })
+  const [auth] = useAuth()
+  const router = useRouter()
+  
+    useEffect(() => {
+      if (!auth.loading) {
+        auth.user 
+          ? router.push('/agenda')
+          : router.push('/login')
+      }
+    }, [auth.user])
 
-  useEffect(() => {
-    firebaseClient.auth().onAuthStateChanged(user => {
-      setAuth({
-        loading: false,
-        user
-      })
-    })
-  }, [])
-
-  if (auth.loading) {
     return (
       <Box 
         background='#f5f5fa' 
@@ -33,7 +28,4 @@ export default function Home() {
         <Spinner />
       </Box>
     )
-  }
-
-  return auth.user ? <Agenda /> : <Login />
 }
