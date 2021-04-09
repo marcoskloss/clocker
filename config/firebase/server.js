@@ -1,5 +1,4 @@
 import firebaseServer from "firebase-admin"
-// console.log(`AQUI=======================\n\n7\n${process.env.PRIVATE_KEY_ID}\n\n\n`);
 
 const app = firebaseServer.apps.length
   ? firebaseServer.app()

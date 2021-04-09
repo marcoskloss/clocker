@@ -17,4 +17,8 @@ const app = firebase.apps.length
 
 export const persistenceMode = firebase.auth.Auth.Persistence.LOCAL
 
+export function getToken() {
+  return firebase.auth().currentUser?.getIdToken()
+}
+
 export default app
