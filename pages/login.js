@@ -17,6 +17,8 @@ import { useAuth } from '../components/Auth'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
+import { Logo } from '../components/Logo'
+
 const validationSchema = yup.object().shape({
   email: yup.string().email('Email inválido').required('Preenchimento obrigatório'),
   password: yup.string().required('Preenchimento obrigatório'),
@@ -51,8 +53,7 @@ export default function Login() {
   return (
     <div style={{height: '100vh', width:'100%', background: '#f5f5fa', display: 'flex', alignItems:'center', justifyContent:'center'}}>
       <Container p={4} centerContent>
-        <img src="/assets/logo.svg" alt="Clocker"/>
-
+        <Logo size={155} />
         <Box>
           <Text p={4} mt={8}>
             Crie sua agenda compartilhada
