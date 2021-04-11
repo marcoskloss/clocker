@@ -8,23 +8,26 @@ import { addDays, subDays } from 'date-fns'
 import { useFetch } from '@refetty/react'
 
 import { useAuth } from "../components/Auth";
+import { getToken } from "../config/firebase/client";
 import { formatDate } from '../components/Date'
 import { Logo } from "../components/Logo";
 
-function getAgenda(when) {
-  axios({
+async function getAgenda(when) {
+  const token = await getToken()
+  
+  return axios({
     method: 'get',
     url: '/api/agenda',
-    params: { when: when },
+    params: { when },
     headers: {
-      Authorization: `Bearer (wtoken)`
+      Authorization: `Bearer ${token}`
     }
   })
 }
 
 function Header({ children }) {
   return (
-    <Box width='100%' border='1px solid red' p={4} display='flex' alignItems='center' justifyContent='space-between'>
+    <Box width='100%' p={4} display='flex' alignItems='center' justifyContent='space-between'>
       { children}
     </Box>
   )
@@ -63,7 +66,7 @@ export default function Agenda() {
             </Button>
         </Header>
 
-        <Box display='flex' alignItems='center' justifyContent='center' maxW='400px' w='99%' border='1px solid red' mt={14}>
+        <Box bg='#ebebf3' borderRadius='4px' display='flex' alignItems='center' justifyContent='center' maxW='400px' w='99%' mt={14}>
           <IconButton
             icon={<ChevronLeftIcon />}
             bg='transparent'
