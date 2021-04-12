@@ -10,6 +10,7 @@ import { useFetch } from '@refetty/react'
 import { useAuth } from "../components/Auth";
 import { formatDate } from '../components/Date'
 import { Logo } from "../components/Logo";
+import { TimeBlock } from '../components/TimeBlock'
 
 async function getSchedule(when) {
   return axios({
@@ -27,22 +28,6 @@ function Header({ children }) {
   )
 }
 
-function TimeBlock({ time }) {
-  return (
-    <Button 
-      _hover={{
-        opacity: '0.8'
-      }}
-      bg='teal' 
-      w={40} h={12} 
-      borderRadius='4px' 
-      color='#f5f5f5' fontWeight='bold'
-    >
-      {time}
-    </Button>
-  )
-}
-
 export default function Schedule() {
   const [auth, { logout }] = useAuth()
   const router = useRouter()
@@ -50,17 +35,18 @@ export default function Schedule() {
   const [when, setWhen] = useState(() => new Date())
   const [ data, {loading, status, error}, fetch ] = useFetch(getSchedule, { lazy: true })
 
-  useEffect(() => {
-    fetch(when)
-  }, [when])
-
+  
   function addDay() {
     return addDays(when, 1);
   }
-
+  
   function removeDay() {
     return subDays(when, 1);
   }
+
+  useEffect(() => {
+    fetch(when)
+  }, [when])
 
   return (
     <div style={{ height: '100vh', width: '100%', background: '#f5f5fa', display: 'flex', justifyContent: 'center' }}>
